@@ -40,7 +40,7 @@ This is a **Kanban Project Management App** built with **React**, **TypeScript**
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone [<repository-url>](https://github.com/avat6ar/kanban-project.git)
    cd kanban-project
 
 2. Install dependencies:
