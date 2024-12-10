@@ -3,6 +3,7 @@ import { CreateTask } from "@/components/CreateTask";
 import { Project, TaskColumns } from "@/index";
 import { useParams } from "react-router-dom";
 import { useLocalStorage } from "@/hooks/localStorage";
+import TaskCard from "@/components/TaskCard";
 
 const View: React.FC = () => {
   const { projectId } = useParams();
@@ -16,7 +17,7 @@ const View: React.FC = () => {
   const { getItem, setItem } = useLocalStorage();
 
   useEffect(() => {
-    const storedProjects: Project[] =  getItem("projects");
+    const storedProjects: Project[] = getItem("projects");
     const selectedProject = storedProjects.find(p => p.id == projectId);
 
     setProject(selectedProject);
@@ -76,6 +77,15 @@ const View: React.FC = () => {
 
   const allowDrop = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
 
+  const handleDeleteTask = (taskId: string, column: keyof TaskColumns) => {
+    const updatedTasks = {
+      ...tasks,
+      [column]: tasks[column].filter(task => task.id !== taskId),
+    };
+
+    setTasks(updatedTasks);
+  };
+
   if (!project) {
     return <div>Project not found</div>;
   }
@@ -93,11 +103,19 @@ const View: React.FC = () => {
           <div>
             <div
               key={column}
-              className="bg-gray-100 rounded-md p-4 shadow-md"
+              className="bg-gray-100 rounded-md p-4 shadow-md min-h-[80vh]"
               onDragOver={allowDrop}
               onDrop={e => handleDrop(e, column as keyof TaskColumns)}
             >
-              <h2 className="text-xl font-semibold capitalize">
+              <h2
+                className={`text-xl font-semibold capitalize ${
+                  column == "done"
+                    ? "text-green-500"
+                    : column == "inProgress"
+                    ? "text-yellow-500"
+                    : "text-red-500"
+                }`}
+              >
                 {column.replace(/([A-Z])/g, " $1")}
               </h2>
               {tasks[column as keyof TaskColumns].length != 0 && (
@@ -105,13 +123,16 @@ const View: React.FC = () => {
                   {tasks[column as keyof TaskColumns]?.map(task => (
                     <div
                       key={task.id}
-                      className="bg-white p-2 rounded-md shadow cursor-move"
                       draggable
                       onDragStart={e =>
                         handleDragStart(e, task.id, column as keyof TaskColumns)
                       }
                     >
-                      {task.name}
+                      <TaskCard
+                        item={task}
+                        onDelete={handleDeleteTask}
+                        column={column as keyof TaskColumns}
+                      />
                     </div>
                   ))}
                 </div>

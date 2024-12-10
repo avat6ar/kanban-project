@@ -4,7 +4,7 @@ export const useLocalStorage = () => {
       localStorage.setItem(key, JSON.stringify(value))
     },
     getItem: (key: string) => {
-      return JSON.parse(localStorage.getItem(key) as string) || ''
+      return JSON.parse(localStorage.getItem(key) as string) || []
     },
     removeItem: (key: string) => {
       localStorage.removeItem(key)

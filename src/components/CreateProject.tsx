@@ -44,7 +44,7 @@ export function CreateProject({ setProjects }: any) {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="w-full mt-4">
         <Button variant="outline">Add New Project</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[625px]">
