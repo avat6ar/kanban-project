@@ -40,19 +40,16 @@ This is a **Kanban Project Management App** built with **React**, **TypeScript**
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/avat6ar/kanban-project.git
    cd kanban-project
-  ```
 
 2. Install dependencies:
    ```bash
    npm install
-   ```
    
 3. Start the development server:
    ```bash
    npm run dev
-   ```
 
 4. Open your browser and visit http://localhost:5173.
 
